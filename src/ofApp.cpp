@@ -1,4 +1,7 @@
 #include "ofApp.h"
+#include "guiVoyageurEspace.h"
+
+guiVoyageurEspace gui;
 
 ofSpherePrimitive planettes[3];
 ofImage textures[3];
@@ -10,10 +13,12 @@ const int SOLEIL = 0;
 const int PLANETTE = 1;
 const int LUNE = 2;
 
-const string pathSrc = "C:\\openframeworks_X64-VS2013_X64\\apps\\myApps\\ProjetInfographie\\src\\";
-
 //--------------------------------------------------------------
 void ofApp::setup(){
+	gui = *new guiVoyageurEspace();
+
+	gui.setup();
+
 	ofBackground(ofColor::black);
 
 	ofRectangle orientedViewport = ofGetNativeViewport();
@@ -30,21 +35,21 @@ void ofApp::setup(){
 
 	pointLight.setPosition(ofGetWidth() / 2, ofGetHeight() / 2, 0);
 
-	textures[SOLEIL].loadImage(pathSrc + "texture_sun.jpg");
+	textures[SOLEIL].loadImage("texture_sun.jpg");
 
 	planettes[PLANETTE].setRadius(20);
 	planettes[PLANETTE].setPosition(ofGetWidth() / 4, ofGetHeight() / 2, 0);
 
 	material[PLANETTE].setSpecularColor(0);
 
-	textures[PLANETTE].loadImage(pathSrc + "texture_earth_clouds.jpg");
+	textures[PLANETTE].loadImage("texture_earth_clouds.jpg");
 
 	planettes[LUNE].setRadius(4);
 	planettes[LUNE].setPosition(ofGetWidth() / 4 - 15, ofGetHeight() / 2, 0);
 
 	material[LUNE].setSpecularColor(0);
 
-	textures[LUNE].loadImage(pathSrc + "texture_moon.jpg");
+	textures[LUNE].loadImage("texture_moon.jpg");
 }
 
 //--------------------------------------------------------------
@@ -54,6 +59,9 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	ofBackground(0);
+	gui.draw();
+
 	ofEnableLighting();
 	pointLight.enable();
 
@@ -69,7 +77,7 @@ void ofApp::draw(){
 
 		if (astre == SOLEIL)
 		{
-			planettes[astre].rotate(0.03, 0.0, 0.1, 0);
+			planettes[astre].rotate(0.20, 0.0, 0.1, 0);
 		}
 		else
 		{
