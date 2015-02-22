@@ -18,16 +18,25 @@ void guiVoyageurEspace::setup()
 	guiSun.setup("Soleil");
 	guiSun.add(sunRadius.setup("rayon", 100, 10, 300)); //rayon du soleil default, min, max
 	guiSun.add(sunCenter.setup("position", ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 100.0f), ofVec3f(0.0f, 0.0f, 0.0f), ofVec3f(ofGetWidth(), ofGetHeight(), 500.0f)));
-	guiSun.add(sunColor.setup("couleur", ofColor(55, 200, 200, 255), ofColor(0, 0, 0, 0), ofColor(255, 255, 255, 255)));
+	guiSun.add(sunColor.setup("couleur", ofColor(255, 255, 255, 255), ofColor(0, 0, 0, 0), ofColor(255, 255, 255, 255)));
 	guiSun.add(sunResolution.setup("resolution", 45, 2, 99));
-	guiSun.add(sunSpeed.setup("vitesse", 20, 0.0, 1.0));
+	guiSun.add(sunRotation.setup("Rotation", 0.20, 0.0, 1.0));
 
+	guiEarth.setup("Terre");
+	guiEarth.add(earthRadius.setup("rayon", 20, 10, 300)); //rayon du soleil default, min, max
+	guiEarth.add(earthResolution.setup("resolution", 45, 2, 99));
+	guiEarth.add(earthRotation.setup("Rotation", 0.10, 0.0, 1.0));
+	guiEarth.add(earthOrbite.setup("vitesse d'Orbite", 0.20, 0.0, 10.0));
+	guiEarth.add(earthOrbiteRadius.setup("rayon d'Orbite", 150, 10, 300));
+
+	guiCam.setup("Camera");
+	guiCam.add(camLoc.setup("position", ofVec3f(ofGetWidth()*.5, ofGetHeight()*.75, 500.0f), ofVec3f(0.0f, 0.0f, 0.0f), ofVec3f(ofGetWidth(), ofGetHeight(), 500.0f)));
 
 	guiMeteor.setup("Meteor");
 	guiMeteor.add(meteorNumber.setup("nombre", 20, 0, 99));
 	guiMeteor.add(meteorRadius.setup("rayon", 15, 0.01, 50));
 	guiMeteor.add(meteorResolution.setup("resolution", 25, 2, 99));
-	guiMeteor.add(meteorSpeed.setup("vitesse", 20, 0.0, 1.0));
+	guiMeteor.add(meteorSpeed.setup("vitesse", 0.20, 0.0, 1.0));
 }
 
 /**
@@ -39,8 +48,24 @@ void guiVoyageurEspace::draw()
 	guiSun.setPosition(ofPoint(0, 0)); //reposition pour eviter le d/placement de l'utilisateur
 	guiSun.draw();
 
-	guiMeteor.setPosition(ofPoint(0, 275));
+	guiEarth.setPosition(ofPoint(0, 275)); //reposition pour eviter le d/placement de l'utilisateur
+	guiEarth.draw();
+
+	guiCam.setPosition(ofPoint(0, 400)); //reposition pour eviter le d/placement de l'utilisateur
+	guiCam.draw();
+
+	guiMeteor.setPosition(ofPoint(0, 550));
 	guiMeteor.draw();
+}
+
+/**
+*\fonction getCamLocation()
+*\brief retourne le vecteur correspondant au centre afficher a l'interface
+*\return ofVec3f (float x, float y, float z)
+*/
+ofVec3f guiVoyageurEspace::getCamLocation()
+{
+	return camLoc;
 }
 
 /**
@@ -85,15 +110,65 @@ ofVec3f guiVoyageurEspace::getSunCenter()
 }
 
 /**
-*\fonction getSunSpeed()
+*\fonction getSunRotation()
 *\brief retourne la vitesse de rotation afficher a l'interface
 *\return float (0.0-1.0)
 */
-float guiVoyageurEspace::getSunSpeed()
+float guiVoyageurEspace::getSunRotation()
 {
-	return sunSpeed;
+	return sunRotation;
 }
 
+/**
+*\fonction getSunRadius()
+*\brief retourne le rayon afficher a l'interface
+*\return float (10-300)
+*/
+float guiVoyageurEspace::getEarthRadius()
+{
+	return earthRadius;
+}
+
+/**
+*\fonction getSunResolution()
+*\brief retourne la resolution afficher a l'interface
+*\return integer (2-99)
+*/
+int guiVoyageurEspace::getEarthResolution()
+{
+	return earthResolution;
+
+}
+
+/**
+*\fonction getEarthRotation()
+*\brief retourne la vitesse de rotation afficher a l'interface
+*\return float (0.0-1.0)
+*/
+float guiVoyageurEspace::getEarthRotation()
+{
+	return earthRotation;
+}
+
+/**
+*\fonction getEarthOrbite()
+*\brief retourne la vitesse d'orbite avec le soleil affiche a l'interface
+*\return float (0.0-1.0)
+*/
+float guiVoyageurEspace::getEarthOrbite()
+{
+	return earthOrbite;
+}
+
+/**
+*\fonction getEarthOrbite()
+*\brief retourne le rayon d'orbite avec le soleil affiche a l'interface
+*\return float (0.0-1.0)
+*/
+float guiVoyageurEspace::getEarthOrbiteRadius()
+{
+	return earthOrbiteRadius;
+}
 
 /**
 *\fonction getMeteorNumber()

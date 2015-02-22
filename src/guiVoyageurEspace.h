@@ -22,7 +22,15 @@ public:
 	int getSunResolution();
 	ofColor getSunColor();
 	ofVec3f getSunCenter();
-	float getSunSpeed();
+	float getSunRotation();
+
+	ofVec3f getCamLocation();
+
+	float getEarthRadius();
+	int getEarthResolution();
+	float getEarthRotation();
+	float getEarthOrbite();
+	float getEarthOrbiteRadius();
 
 	int getMeteorNumber();
 	float getMeteorRadius();
@@ -30,12 +38,21 @@ public:
 	float getMeteorSpeed();
 
 private:
+	ofxVec3Slider camLoc;
+	
 	//sun
 	ofxFloatSlider sunRadius;
 	ofxIntSlider sunResolution;
 	ofxColorSlider sunColor;
 	ofxVec3Slider sunCenter;
-	ofxFloatSlider sunSpeed;
+	ofxFloatSlider sunRotation;
+
+	//terre
+	ofxFloatSlider earthRadius;
+	ofxIntSlider earthResolution;
+	ofxFloatSlider earthRotation;
+	ofxFloatSlider earthOrbite;
+	ofxFloatSlider earthOrbiteRadius;
 
 	//meteor
 	ofxIntSlider meteorNumber;
@@ -43,7 +60,9 @@ private:
 	ofxIntSlider meteorResolution;
 	ofxFloatSlider meteorSpeed;
 
+	ofxPanel guiCam;
 	ofxPanel guiSun;
+	ofxPanel guiEarth;
 	ofxPanel guiMeteor;
 };
 
