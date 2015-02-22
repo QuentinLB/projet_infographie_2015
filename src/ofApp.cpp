@@ -27,13 +27,6 @@ void ofApp::setup(){
 
 	cam.setPosition(gui.getCamLocation());
 	cam.lookAt(ofVec3f(ofGetWidth()*.3, ofGetHeight()*.5, 0), ofVec3f(0, 1, 0));
-
-	//planettes[LUNE].setRadius(4);
-	//planettes[LUNE].setPosition(ofGetWidth() / 4 - 15, ofGetHeight() / 2, 0);
-
-	//material[LUNE].setSpecularColor(0);
-
-	//textures[LUNE].loadImage("texture_moon.jpg");
 }
 
 //--------------------------------------------------------------
@@ -43,15 +36,17 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+
 	ofBackground(0);
 	gui.draw();
 	
 	cam.setPosition(gui.getCamLocation());
-	cam.lookAt(ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 0), ofVec3f(0, 1, 0.5));
+	cam.lookAt(ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 0), ofVec3f(0, 1, 0));
 
 	light.setPosition(gui.getSunCenter());
 	light.setDiffuseColor(gui.getSunColor());
 
+	ofEnableDepthTest();
 	ofEnableLighting();
 	light.enable();
 	cam.begin();
