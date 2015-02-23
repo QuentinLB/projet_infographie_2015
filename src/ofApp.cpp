@@ -2,10 +2,12 @@
 #include "guiVoyageurEspace.h"
 #include "Soleil.h"
 #include "Terre.h"
+#include "Lune.h"
 
 guiVoyageurEspace gui;
 Soleil sun;
 Terre earth;
+Lune moon;
 ofLight light;
 
 ofCamera cam;
@@ -18,6 +20,7 @@ void ofApp::setup(){
 	gui.setup();
 	sun.setup(gui);
 	earth.setup(gui);
+	moon.setup(gui);
 
 	ofBackground(ofColor::black);
 
@@ -26,7 +29,7 @@ void ofApp::setup(){
 	float eyeY = ofGetHeight() / 2;
 
 	cam.setPosition(gui.getCamLocation());
-	cam.lookAt(ofVec3f(ofGetWidth()*.3, ofGetHeight()*.5, 0), ofVec3f(0, 1, 0));
+	cam.lookAt(ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 0), ofVec3f(0, 1, 0));
 }
 
 //--------------------------------------------------------------
@@ -36,10 +39,9 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
 	ofBackground(0);
 	gui.draw();
-	
+
 	cam.setPosition(gui.getCamLocation());
 	cam.lookAt(ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 0), ofVec3f(0, 1, 0));
 
@@ -51,8 +53,10 @@ void ofApp::draw(){
 	light.enable();
 	cam.begin();
 
+	
 	sun.draw(gui);
-	earth.draw(gui);
+	ofVec3f positionTerre = earth.draw(gui);
+	moon.draw(gui, positionTerre);
 
 	cam.end();
 	ofDisableLighting();

@@ -1,7 +1,5 @@
 #include "Terre.h"
 
-float angleOrbite;
-
 void Terre::setup(guiVoyageurEspace gui){
 	model.setRadius(gui.getEarthRadius());
 	model.setResolution(gui.getEarthResolution());
@@ -12,7 +10,7 @@ void Terre::setup(guiVoyageurEspace gui){
 	angleOrbite = 0;
 }
 
-void Terre::draw(guiVoyageurEspace gui){
+ofVec3f Terre::draw(guiVoyageurEspace gui){
 	if (angleOrbite >= 365){
 		angleOrbite -= 365;
 	}
@@ -41,4 +39,6 @@ void Terre::draw(guiVoyageurEspace gui){
 	texture.getTextureReference().unbind();
 	ofPopMatrix();
 	angleOrbite += gui.getEarthOrbite();
+
+	return model.getPosition();
 }

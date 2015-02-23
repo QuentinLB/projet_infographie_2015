@@ -29,6 +29,13 @@ void guiVoyageurEspace::setup()
 	guiEarth.add(earthOrbite.setup("vitesse d'Orbite", 0.20, 0.0, 10.0));
 	guiEarth.add(earthOrbiteRadius.setup("rayon d'Orbite", 150, 10, 300));
 
+	guiMoon.setup("Lune");
+	guiMoon.add(moonRadius.setup("rayon", 5, 1, 100)); //rayon du soleil default, min, max
+	guiMoon.add(moonResolution.setup("resolution", 45, 2, 99));
+	guiMoon.add(moonRotation.setup("Rotation", 0.10, 0.0, 1.0));
+	guiMoon.add(moonOrbite.setup("vitesse d'Orbite", 0.20, 0.0, 10.0));
+	guiMoon.add(moonOrbiteRadius.setup("rayon d'Orbite", 40, 1, 150));
+
 	guiCam.setup("Camera");
 	guiCam.add(camLoc.setup("position", ofVec3f(ofGetWidth()*.5, ofGetHeight()*.75, 500.0f), ofVec3f(0.0f, 0.0f, 0.0f), ofVec3f(ofGetWidth(), ofGetHeight(), 500.0f)));
 
@@ -54,7 +61,10 @@ void guiVoyageurEspace::draw()
 	guiCam.setPosition(ofPoint(0, 400)); //reposition pour eviter le d/placement de l'utilisateur
 	guiCam.draw();
 
-	guiMeteor.setPosition(ofPoint(0, 550));
+	guiMoon.setPosition(ofPoint(0, 500)); //reposition pour eviter le d/placement de l'utilisateur
+	guiMoon.draw();
+
+	guiMeteor.setPosition(ofPoint(0, 625));
 	guiMeteor.draw();
 }
 
@@ -168,6 +178,57 @@ float guiVoyageurEspace::getEarthOrbite()
 float guiVoyageurEspace::getEarthOrbiteRadius()
 {
 	return earthOrbiteRadius;
+}
+
+/**
+*\fonction getSunRadius()
+*\brief retourne le rayon afficher a l'interface
+*\return float (10-300)
+*/
+float guiVoyageurEspace::getMoonRadius()
+{
+	return moonRadius;
+}
+
+/**
+*\fonction getSunResolution()
+*\brief retourne la resolution afficher a l'interface
+*\return integer (2-99)
+*/
+int guiVoyageurEspace::getMoonResolution()
+{
+	return moonResolution;
+
+}
+
+/**
+*\fonction getmoonRotation()
+*\brief retourne la vitesse de rotation afficher a l'interface
+*\return float (0.0-1.0)
+*/
+float guiVoyageurEspace::getMoonRotation()
+{
+	return moonRotation;
+}
+
+/**
+*\fonction getmoonOrbite()
+*\brief retourne la vitesse d'orbite avec le soleil affiche a l'interface
+*\return float (0.0-1.0)
+*/
+float guiVoyageurEspace::getMoonOrbite()
+{
+	return moonOrbite;
+}
+
+/**
+*\fonction getmoonOrbite()
+*\brief retourne le rayon d'orbite avec le soleil affiche a l'interface
+*\return float (0.0-1.0)
+*/
+float guiVoyageurEspace::getMoonOrbiteRadius()
+{
+	return moonOrbiteRadius;
 }
 
 /**

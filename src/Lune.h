@@ -1,11 +1,11 @@
 #pragma once
 #include "guiVoyageurEspace.h"
 
-class Terre
+class Lune
 {
 public:
 	void setup(guiVoyageurEspace gui);
-	ofVec3f draw(guiVoyageurEspace gui);
+	void draw(guiVoyageurEspace gui, ofVec3f positionTerre);
 private:
 	ofSpherePrimitive model;
 	ofImage texture;

@@ -32,6 +32,12 @@ public:
 	float getEarthOrbite();
 	float getEarthOrbiteRadius();
 
+	float getMoonRadius();
+	int getMoonResolution();
+	float getMoonRotation();
+	float getMoonOrbite();
+	float getMoonOrbiteRadius();
+
 	int getMeteorNumber();
 	float getMeteorRadius();
 	int getMeteorResolution();
@@ -54,6 +60,13 @@ private:
 	ofxFloatSlider earthOrbite;
 	ofxFloatSlider earthOrbiteRadius;
 
+	//lune
+	ofxFloatSlider moonRadius;
+	ofxIntSlider moonResolution;
+	ofxFloatSlider moonRotation;
+	ofxFloatSlider moonOrbite;
+	ofxFloatSlider moonOrbiteRadius;
+
 	//meteor
 	ofxIntSlider meteorNumber;
 	ofxFloatSlider meteorRadius;
@@ -63,6 +76,7 @@ private:
 	ofxPanel guiCam;
 	ofxPanel guiSun;
 	ofxPanel guiEarth;
+	ofxPanel guiMoon;
 	ofxPanel guiMeteor;
 };
 
