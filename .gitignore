@@ -1,0 +1,15 @@
+obj/
+*.opensdf
+*.sdf
+*.sln
+*.v11.suo
+*.vcxproj
+*.vcxproj.*
+bin/*.dll
+bin/*.exe
+bin/*.exp
+bin/*.ilk
+bin/*.lib
+bin/*.pdb
+*.rc
+*.make

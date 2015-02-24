@@ -1,15 +1,24 @@
+#include <string>
 #include "ofApp.h"
 #include "guiVoyageurEspace.h"
 #include "Soleil.h"
 #include "Terre.h"
 #include "Lune.h"
+#include "CubeMap.h"
+
+std::string XN = "test_left2.png";
+std::string XP = "test_right1.png";
+std::string YN = "test_bottom4.png";
+std::string YP = "test_top3.png";
+std::string ZN = "test_back6.png";
+std::string ZP = "test_front5.png";
 
 guiVoyageurEspace gui;
 Soleil sun;
 Terre earth;
 Lune moon;
 ofLight light;
-
+CubeMap cubemap;
 ofCamera cam;
 
 //--------------------------------------------------------------
@@ -21,8 +30,8 @@ void ofApp::setup(){
 	sun.setup(gui);
 	earth.setup(gui);
 	moon.setup(gui);
-
-	ofBackground(ofColor::black);
+	//cubemap.setup(XP,YP,ZP,XN,YN,ZN);
+	ofBackground(ofColor::gray);
 
 	ofRectangle orientedViewport = ofGetNativeViewport();
 	float eyeX = ofGetWidth() / 2;
@@ -39,7 +48,8 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofBackground(0);
+	ofBackground(ofColor::gray);
+	//cubemap.draw(cam);
 	gui.draw();
 
 	cam.setPosition(gui.getCamLocation());
@@ -53,7 +63,6 @@ void ofApp::draw(){
 	light.enable();
 	cam.begin();
 
-	
 	sun.draw(gui);
 	ofVec3f positionTerre = earth.draw(gui);
 	moon.draw(gui, positionTerre);

@@ -44,6 +44,7 @@ public:
 	float getMeteorSpeed();
 
 private:
+	// camera
 	ofxVec3Slider camLoc;
 	
 	//sun
