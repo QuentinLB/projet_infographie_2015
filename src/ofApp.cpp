@@ -5,6 +5,7 @@
 #include "Terre.h"
 #include "Lune.h"
 #include "CubeMap.h"
+#include "modele3D.h" // Modèle 3D
 
 std::string XN = "test_left2.png";
 std::string XP = "test_right1.png";
@@ -24,6 +25,8 @@ ofCamera cam;
 bool CAMERA_TRACKING = false;
 int CAMERA_VIT = 5;
 float SENSITIVITY = 0.25;
+//Modèle 3D
+modele3D *vaisseau;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -35,6 +38,9 @@ void ofApp::setup(){
 	earth.setup(gui);
 	moon.setup(gui);
 	//cubemap.setup(XP,YP,ZP,XN,YN,ZN);
+	//Modèle 3D
+	vaisseau = new modele3D("turbosonic.obj", (float)ofGetWidth()*0.75, (float)ofGetHeight()*0.65, 0, 0.5, 0.5, 0.5);
+	vaisseau->setup();
 	ofBackground(ofColor::gray);
 
 	ofRectangle orientedViewport = ofGetNativeViewport();
@@ -71,6 +77,8 @@ void ofApp::draw(){
 	ofVec3f positionTerre = earth.draw(gui);
 	moon.draw(gui, positionTerre);
 
+//Modèle 3D
+	vaisseau->draw();
 	cam.end();
 	ofDisableLighting();
 }
