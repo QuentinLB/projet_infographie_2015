@@ -5,6 +5,7 @@
 #include "Terre.h"
 #include "Lune.h"
 #include "CubeMap.h"
+#include "modele3D.h" // Modèle 3D
 
 std::string XN = "test_left2.png";
 std::string XP = "test_right1.png";
@@ -23,7 +24,10 @@ ofCamera cam;
 
 bool CAMERA_TRACKING = false;
 int CAMERA_VIT = 5;
+
 float SENSITIVITY = 0.1;
+//Modèle 3D
+modele3D *vaisseau;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -35,6 +39,9 @@ void ofApp::setup(){
 	earth.setup(gui);
 	moon.setup(gui);
 	//cubemap.setup(XP,YP,ZP,XN,YN,ZN);
+	//Modèle 3D
+	vaisseau = new modele3D("turbosonic.obj", (float)ofGetWidth()*0.75, (float)ofGetHeight()*0.65, 0, 0.5, 0.5, 0.5);
+	vaisseau->setup();
 	ofBackground(ofColor::gray);
 
 	ofRectangle orientedViewport = ofGetNativeViewport();
@@ -71,6 +78,8 @@ void ofApp::draw(){
 	ofVec3f positionTerre = earth.draw(gui);
 	moon.draw(gui, positionTerre);
 
+//Modèle 3D
+	vaisseau->draw();
 	cam.end();
 	ofDisableLighting();
 	ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 15);
@@ -128,59 +137,59 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-	ofVec3f pos = cam.getPosition();
-	ofVec3f orient = cam.getOrientationEuler();
-	ofVec3f up = cam.getUpDir();
+	//ofVec3f pos = cam.getPosition();
+	//ofVec3f orient = cam.getOrientationEuler();
+	//ofVec3f up = cam.getUpDir();
 
-	int middle_x = ofGetWidth() /2;
-	int middle_y = ofGetHeight() /2;
+	//int middle_x = ofGetWidth() /2;
+	//int middle_y = ofGetHeight() /2;
 
-	int centered_x = x - middle_x;
-	int centered_y = middle_y - y;
-	ofLog(OF_LOG_NOTICE,"x,y : (%d,%d)",centered_x,centered_y);
-	ofVec3f mouse_dir(0);
-    static double CurrentRotationX = 0.0;
+	//int centered_x = x - middle_x;
+	//int centered_y = middle_y - y;
+	//ofLog(OF_LOG_NOTICE,"x,y : (%d,%d)",centered_x,centered_y);
+	//ofVec3f mouse_dir(0);
+ //   static double CurrentRotationX = 0.0;
 
-	// The maximum angle we can look up or down, in radians
-	double maxAngle = 1;
+	//// The maximum angle we can look up or down, in radians
+	//double maxAngle = 1;
 
-	// if the mouse hasn't moved, return without doing
-	// anything to our view
-	if(centered_x == 0 && centered_y == 0)
-		return;
+	//// if the mouse hasn't moved, return without doing
+	//// anything to our view
+	//if(centered_x == 0 && centered_y == 0)
+	//	return;
 
-	// otherwise move the mouse back to the middle of the screen
-	SetCursorPos(ofGetWindowPositionX()+middle_x, ofGetWindowPositionY()+middle_y);
+	//// otherwise move the mouse back to the middle of the screen
+	//SetCursorPos(ofGetWindowPositionX()+middle_x, ofGetWindowPositionY()+middle_y);
 
-	mouse_dir.x = centered_x/SENSITIVITY; 
-	mouse_dir.y = centered_y/SENSITIVITY;
+	//mouse_dir.x = centered_x/SENSITIVITY; 
+	//mouse_dir.y = centered_y/SENSITIVITY;
 
-    CurrentRotationX += mouse_dir.y;
- 
-	// We don't want to rotate up more than one radian, so we cap it.
-	if(CurrentRotationX > 1)
-	{
-		CurrentRotationX = 1;
-		return;
-	}
-	// We don't want to rotate down more than one radian, so we cap it.
-	if(CurrentRotationX < -1)
-	{
-		CurrentRotationX = -1;
-		return;
-	}
-	else
-	{
-		// get the axis to rotate around the x-axis. 
-		ofVec3f axis = (orient - pos).cross(up).normalize();
-		// Rotate around the y axis
-		orient = rotateCamera(mouse_dir.y, axis, orient);
-		// Rotate around the x axis
-		orient = rotateCamera(mouse_dir.x, axis, orient);
-		
-		ofLog(OF_LOG_NOTICE, "toto");
-		cam.lookAt(orient, up);
-	}
+ //   CurrentRotationX += mouse_dir.y;
+ //
+	//// We don't want to rotate up more than one radian, so we cap it.
+	//if(CurrentRotationX > 1)
+	//{
+	//	CurrentRotationX = 1;
+	//	return;
+	//}
+	//// We don't want to rotate down more than one radian, so we cap it.
+	//if(CurrentRotationX < -1)
+	//{
+	//	CurrentRotationX = -1;
+	//	return;
+	//}
+	//else
+	//{
+	//	// get the axis to rotate around the x-axis. 
+	//	ofVec3f axis = (orient - pos).cross(up).normalize();
+	//	// Rotate around the y axis
+	//	orient = rotateCamera(mouse_dir.y, axis, orient);
+	//	// Rotate around the x axis
+	//	orient = rotateCamera(mouse_dir.x, axis, orient);
+	//	
+	//	ofLog(OF_LOG_NOTICE, "toto");
+	//	cam.lookAt(orient, up);
+	//}
 }
 
 
