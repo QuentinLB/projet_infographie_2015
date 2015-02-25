@@ -40,7 +40,7 @@ void ofApp::setup(){
 	sun.setup(gui);
 	earth.setup(gui);
 	moon.setup(gui);
-	//fp_cam.setup();
+	fp_cam.setup();
 	//Modele 3D
 	/*vaisseau = new modele3D("turbosonic.obj", (float)ofGetWidth()*0.75, (float)ofGetHeight()*0.65, 0, 0.5, 0.5, 0.5);
 	vaisseau->setup();*/
@@ -50,8 +50,8 @@ void ofApp::setup(){
 	float eyeX = ofGetWidth() / 2;
 	float eyeY = ofGetHeight() / 2;
 
-	cam.setPosition(gui.getCamLocation());
-	cam.lookAt(ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 0), ofVec3f(0, 1, 0));
+	//cam.setPosition(gui.getCamLocation());
+	//cam.lookAt(ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 0), ofVec3f(0, 1, 0));
 }
 
 //--------------------------------------------------------------
@@ -62,10 +62,10 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofBackground(ofColor::gray);
+	fp_cam.draw();
+	fp_cam.begin();
 	
 	cubemap.draw();
-
-	//fp_cam.draw();
 	gui.draw();
 
 	/*cam.setPosition(gui.getCamLocation());
@@ -77,7 +77,7 @@ void ofApp::draw(){
 	ofEnableDepthTest();
 	ofEnableLighting();
 	light.enable();
-	cam.begin();
+	//cam.begin();
 
 	sun.draw(gui);
 	ofVec3f positionTerre = earth.draw(gui);
@@ -85,14 +85,15 @@ void ofApp::draw(){
 
 	//Modele 3D
 	//vaisseau->draw();
-	cam.end();
+	fp_cam.end();
 	ofDisableLighting();
 	ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 15);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	//fp_cam.keyPressed(key);
+	fp_cam.keyPressed(key);
+	/*
 	ofVec3f pos = cam.getPosition();
 	if(key == 'z' || key == 'w' || key == OF_KEY_UP)
 		pos.z = pos.z - CAMERA_VIT;
@@ -106,7 +107,7 @@ void ofApp::keyPressed(int key){
 		pos.y = pos.y + CAMERA_VIT;
 	else if(key == OF_KEY_CONTROL)
 		pos.y = pos.y - CAMERA_VIT;
-	cam.setPosition(pos);
+	cam.setPosition(pos);*/
 }
 
 //--------------------------------------------------------------
@@ -143,7 +144,7 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-	//fp_cam.mouseMoved(x,y);
+	fp_cam.mouseMoved(x,y);
 
 	//int middle_x = ofGetWidth() /2;
 	//int middle_y = ofGetHeight() /2;
