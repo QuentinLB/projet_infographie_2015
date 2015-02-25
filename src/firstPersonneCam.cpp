@@ -17,25 +17,26 @@ void firstPersonneCam::setup()
 //reset the cam
 void firstPersonneCam::resetCam()
 {
-	ofPushMatrix();
-	
 	camSpeed = 0.0;
 	camDirection = ofVec3f(0.0, 0.0, 0.0);
 	cam.setPosition(0.0, 0.0, 1000.0);
 	cam.setOrientation(ofVec3f(0.0, 0.0, 0.0));
-	
-	ofPopMatrix();
 }
 
 //move the cam ( must be put in draw)
 void firstPersonneCam::draw()
 {
+	ofPushMatrix();
+	
 	cam.rotate(0.5, camDirection.y, 0.0, 0.0); //axe des x
 	cam.rotate(0.5, 0.0, camDirection.x, 0.0);//axe des y
 	cam.roll(4 * camDirection.z); //axe des z
 	cam.dolly(-1 * camSpeed);
 
 	camDirection.z = 0.0;//reset z direction to stop de roll
+	
+		
+	ofPopMatrix();
 }
 
 //for projectio nmatrix put in gening of draw
