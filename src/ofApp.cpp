@@ -1,18 +1,19 @@
-#include <string>
+﻿#include <string>
 #include "ofApp.h"
 #include "guiVoyageurEspace.h"
 #include "Soleil.h"
 #include "Terre.h"
 #include "Lune.h"
 #include "CubeMap.h"
-#include "modele3D.h" // Modèle 3D
+#include "modele3D.h" // Modele 3D
+#include "firstPersonneCam.h"
 
-std::string XN = "test_left2.png";
-std::string XP = "test_right1.png";
-std::string YN = "test_bottom4.png";
-std::string YP = "test_top3.png";
-std::string ZN = "test_back6.png";
-std::string ZP = "test_front5.png";
+std::string XN = "cubemap_left2.png";
+std::string XP = "cubemap_right1.png";
+std::string YN = "cubemap_bottom4.png";
+std::string YP = "cubemap_top3.png";
+std::string ZN = "cubemap_back6.png";
+std::string ZP = "cubemap_front5.png";
 
 guiVoyageurEspace gui;
 Soleil sun;
@@ -21,27 +22,28 @@ Lune moon;
 ofLight light;
 CubeMap cubemap;
 ofCamera cam;
+//firstPersonneCam fp_cam;
 
 bool CAMERA_TRACKING = false;
 int CAMERA_VIT = 5;
 
 float SENSITIVITY = 0.1;
-//Modèle 3D
-modele3D *vaisseau;
+//Modele 3D
+//modele3D *vaisseau;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+	cubemap.setup(XP,YP,ZP,XN,YN,ZN);
 	gui = *new guiVoyageurEspace();
 
 	gui.setup();
 	sun.setup(gui);
 	earth.setup(gui);
 	moon.setup(gui);
-	//cubemap.setup(XP,YP,ZP,XN,YN,ZN);
-	//Modèle 3D
-	vaisseau = new modele3D("turbosonic.obj", (float)ofGetWidth()*0.75, (float)ofGetHeight()*0.65, 0, 0.5, 0.5, 0.5);
-	vaisseau->setup();
+	//fp_cam.setup();
+	//Modele 3D
+	/*vaisseau = new modele3D("turbosonic.obj", (float)ofGetWidth()*0.75, (float)ofGetHeight()*0.65, 0, 0.5, 0.5, 0.5);
+	vaisseau->setup();*/
 	ofBackground(ofColor::gray);
 
 	ofRectangle orientedViewport = ofGetNativeViewport();
@@ -60,11 +62,14 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofBackground(ofColor::gray);
-	//cubemap.draw(cam);
+	
+	cubemap.draw();
+
+	//fp_cam.draw();
 	gui.draw();
 
-	cam.setPosition(gui.getCamLocation());
-	cam.lookAt(ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 0), ofVec3f(0, 1, 0));
+	/*cam.setPosition(gui.getCamLocation());
+	cam.lookAt(ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 0), ofVec3f(0, 1, 0));*/
 
 	light.setPosition(gui.getSunCenter());
 	light.setDiffuseColor(gui.getSunColor());
@@ -78,8 +83,8 @@ void ofApp::draw(){
 	ofVec3f positionTerre = earth.draw(gui);
 	moon.draw(gui, positionTerre);
 
-//Modèle 3D
-	vaisseau->draw();
+	//Modele 3D
+	//vaisseau->draw();
 	cam.end();
 	ofDisableLighting();
 	ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 15);
@@ -87,6 +92,7 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+	//fp_cam.keyPressed(key);
 	ofVec3f pos = cam.getPosition();
 	if(key == 'z' || key == 'w' || key == OF_KEY_UP)
 		pos.z = pos.z - CAMERA_VIT;
@@ -137,6 +143,19 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
+	//fp_cam.mouseMoved(x,y);
+
+	//int middle_x = ofGetWidth() /2;
+	//int middle_y = ofGetHeight() /2;
+
+	//int centered_x = x - middle_x;
+	//int centered_y = middle_y - y;
+
+	//if(centered_x>0)
+	//	cam.
+
+}
+
 	//ofVec3f pos = cam.getPosition();
 	//ofVec3f orient = cam.getOrientationEuler();
 	//ofVec3f up = cam.getUpDir();
@@ -190,9 +209,6 @@ void ofApp::mouseMoved(int x, int y ){
 	//	ofLog(OF_LOG_NOTICE, "toto");
 	//	cam.lookAt(orient, up);
 	//}
-}
-
-
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){

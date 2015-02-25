@@ -15,7 +15,6 @@ public:
 	CubeMap(void);
 	~CubeMap(void);
 	void setup( string pos_x, string pos_y, string pos_z, string neg_x,string neg_y,string neg_z);
-	void draw(){};
-	void draw(ofCamera cam);
 	void Draw_Skybox(float x, float y, float z, float width, float height, float length);
+	void draw();
 };

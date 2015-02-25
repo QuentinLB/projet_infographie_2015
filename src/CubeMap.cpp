@@ -48,60 +48,54 @@ void CubeMap::setup( string pos_x, string pos_y, string pos_z, string neg_x,stri
 	data_pz = images[4].getPixels();
 	data_nz = images[5].getPixels();
 	
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_px); // postive x
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X_ARB, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_nx); // negative x
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y_ARB, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_py); // postive y
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_ny); // negative y
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_nz); // negative z
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z_ARB, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_pz); // positive z
+	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB, 0, 3, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_px); // postive x
+	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X_ARB, 0, 3, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_nx); // negative x
+	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y_ARB, 0, 3, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_py); // postive y
+	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB, 0, 3, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_ny); // negative y
+	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB, 0, 3, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_nz); // negative z
+	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z_ARB, 0, 3, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_pz); // positive z
 	
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);		// Set far filtering mode
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);     // Set near filtering mode
+	// Configuration des parametres de la texture
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP );
 }
 
-void CubeMap::draw(ofCamera cam)
+void CubeMap::draw()
 {
-
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
+	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 
-		glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-
-		glDepthFunc(GL_LEQUAL);
-		glEnable(GL_DEPTH_TEST);
-		cubeshader.begin();
-		//glDisable(GL_DEPTH_TEST);
-		glActiveTexture(GL_TEXTURE0);
+	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_DEPTH_TEST);
+	cubeshader.begin();
+	//glDisable(GL_DEPTH_TEST);
+	glActiveTexture(GL_TEXTURE0);
 	
-		// Utilisation de la texture CubeMap
-		glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, _textureID);
+	// Utilisation de la texture CubeMap
+	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, _textureID);
 
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-
-		glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-
-
-
-
-		cubeshader.setUniform1i("EnvMap", 0);
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
+	cubeshader.setUniform1i("EnvMap", 0);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
 	
-	Draw_Skybox(0, 0, 0, 2000, 2000, 2000);
-
-
+	Draw_Skybox(0, 0, 0, 10000, 10000, 10000);
 
 	cubeshader.end();
 
 	glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 
 	glDisable(GL_DEPTH_TEST);
-   	glPopMatrix();
-
+	glPopMatrix();
 }
+
+
 
 void CubeMap::Draw_Skybox(float x, float y, float z, float width, float height, float length){
 
@@ -110,8 +104,7 @@ void CubeMap::Draw_Skybox(float x, float y, float z, float width, float height, 
 	y = y - height / 2;
 	z = z - length / 2;
 
-
-	// Draw Front side
+	// Draw Front side / ZP
 
 	glBegin(GL_QUADS);
 		glTexCoord2f(1.0f, 0.0f); glVertex3f(x,		  y,		z+length);
@@ -120,7 +113,7 @@ void CubeMap::Draw_Skybox(float x, float y, float z, float width, float height, 
 		glTexCoord2f(0.0f, 0.0f); glVertex3f(x+width, y,		z+length);
 	glEnd();
 
-	// Draw Back side
+	// Draw Back side / ZN
 
 	glBegin(GL_QUADS);
 		glTexCoord2f(1.0f, 0.0f); glVertex3f(x+width, y,		z);
@@ -129,7 +122,7 @@ void CubeMap::Draw_Skybox(float x, float y, float z, float width, float height, 
 		glTexCoord2f(0.0f, 0.0f); glVertex3f(x,		  y,		z);
 	glEnd();
 
-	// Draw Left side
+	// Draw Left side / XN
 
 	glBegin(GL_QUADS);
 		glTexCoord2f(1.0f, 1.0f); glVertex3f(x,		  y+height,	z);
@@ -138,7 +131,7 @@ void CubeMap::Draw_Skybox(float x, float y, float z, float width, float height, 
 		glTexCoord2f(1.0f, 0.0f); glVertex3f(x,		  y,		z);
 	glEnd();
 
-	// Draw Right side
+	// Draw Right side / XP
 
 	glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, 0.0f); glVertex3f(x+width, y,		z);
@@ -147,7 +140,7 @@ void CubeMap::Draw_Skybox(float x, float y, float z, float width, float height, 
 		glTexCoord2f(0.0f, 1.0f); glVertex3f(x+width, y+height,	z);
 	glEnd();
 
-	// Draw Up side
+	// Draw Up side / YP
 
 	glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, 0.0f); glVertex3f(x+width, y+height, z);
@@ -156,7 +149,7 @@ void CubeMap::Draw_Skybox(float x, float y, float z, float width, float height, 
 		glTexCoord2f(0.0f, 1.0f); glVertex3f(x,		  y+height,	z);
 	glEnd();
 
-	// Draw Down side
+	// Draw Down side / YN
 
 	glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, 0.0f); glVertex3f(x,		  y,		z);
@@ -164,7 +157,4 @@ void CubeMap::Draw_Skybox(float x, float y, float z, float width, float height, 
 		glTexCoord2f(1.0f, 1.0f); glVertex3f(x+width, y,		z+length);
 		glTexCoord2f(0.0f, 1.0f); glVertex3f(x+width, y,		z);
 	glEnd();
-
-
-
 }
