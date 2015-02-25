@@ -17,10 +17,14 @@ void firstPersonneCam::setup()
 //reset the cam
 void firstPersonneCam::resetCam()
 {
+	ofPushMatrix();
+	
 	camSpeed = 0.0;
 	camDirection = ofVec3f(0.0, 0.0, 0.0);
 	cam.setPosition(0.0, 0.0, 1000.0);
 	cam.setOrientation(ofVec3f(0.0, 0.0, 0.0));
+	
+	ofPopMatrix();
 }
 
 //move the cam ( must be put in draw)
