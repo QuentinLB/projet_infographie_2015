@@ -42,6 +42,10 @@ void ofApp::setup(){
 	earth.setup(gui);
 	moon.setup(gui);
 
+	// Command OpenGL qui utilise l'information de profondeur pour l'occlusion
+	// au lieu de dessiner des objets qui sont cachées par d'autres par dessus
+	glEnable(GL_DEPTH_TEST); 
+
 	fp_cam.setup();
 	pers_cam.setup();
 	//Modele 3D
