@@ -9,4 +9,5 @@ private:
 public:
 	GrapheScene(GrapheSceneNode* racine);
 	~GrapheScene(void);
+	void GrapheScene::render();
 };
