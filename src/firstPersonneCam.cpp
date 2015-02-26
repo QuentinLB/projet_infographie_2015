@@ -12,6 +12,7 @@
 void firstPersonneCam::setup()
 {
 	resetCam();
+	cam.setFarClip(10000);
 }
 
 //reset the cam
@@ -80,6 +81,7 @@ void firstPersonneCam::keyPressed(int key)
 	case OF_KEY_DOWN: if (camSpeed > -1 * CAM_MAX_SPEED) {
 						  camSpeed -= CAM_ACCELERATION / ofGetFrameRate();
 	}
+					  break;
 	}
 }
 

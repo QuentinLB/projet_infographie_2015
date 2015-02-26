@@ -19,25 +19,22 @@ void guiVoyageurEspace::setup()
 	guiSun.add(sunRadius.setup("rayon", 100, 10, 300)); //rayon du soleil default, min, max
 	guiSun.add(sunCenter.setup("position", ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 100.0f), ofVec3f(0.0f, 0.0f, 0.0f), ofVec3f(ofGetWidth(), ofGetHeight(), 500.0f)));
 	guiSun.add(sunColor.setup("couleur", ofColor(255, 255, 255, 255), ofColor(0, 0, 0, 0), ofColor(255, 255, 255, 255)));
-	guiSun.add(sunResolution.setup("resolution", 45, 2, 99));
+	guiSun.add(sunResolution.setup("resolution", 10, 2, 99));
 	guiSun.add(sunRotation.setup("Rotation", 0.20, 0.0, 1.0));
 
 	guiEarth.setup("Terre");
 	guiEarth.add(earthRadius.setup("rayon", 20, 10, 300)); //rayon du soleil default, min, max
-	guiEarth.add(earthResolution.setup("resolution", 45, 2, 99));
+	guiEarth.add(earthResolution.setup("resolution", 10, 2, 99));
 	guiEarth.add(earthRotation.setup("Rotation", 0.10, 0.0, 1.0));
 	guiEarth.add(earthOrbite.setup("vitesse d'Orbite", 0.20, 0.0, 10.0));
 	guiEarth.add(earthOrbiteRadius.setup("rayon d'Orbite", 150, 10, 300));
 
 	guiMoon.setup("Lune");
 	guiMoon.add(moonRadius.setup("rayon", 5, 1, 100)); //rayon du soleil default, min, max
-	guiMoon.add(moonResolution.setup("resolution", 45, 2, 99));
+	guiMoon.add(moonResolution.setup("resolution", 10, 2, 99));
 	guiMoon.add(moonRotation.setup("Rotation", 0.10, 0.0, 1.0));
 	guiMoon.add(moonOrbite.setup("vitesse d'Orbite", 0.20, 0.0, 10.0));
 	guiMoon.add(moonOrbiteRadius.setup("rayon d'Orbite", 40, 1, 150));
-
-	guiCam.setup("Camera");
-	guiCam.add(camLoc.setup("position", ofVec3f(ofGetWidth()*.5, ofGetHeight()*.75, 500.0f), ofVec3f(0.0f, 0.0f, 0.0f), ofVec3f(ofGetWidth(), ofGetHeight(), 500.0f)));
 
 	guiMeteor.setup("Meteor");
 	guiMeteor.add(meteorNumber.setup("nombre", 20, 0, 99));
@@ -52,7 +49,7 @@ void guiVoyageurEspace::setup()
 */
 void guiVoyageurEspace::draw()
 {
-	guiSun.setPosition(ofPoint(0, 0)); //reposition pour eviter le d/placement de l'utilisateur
+	guiSun.setPosition(ofPoint(0, 20)); //reposition pour eviter le d/placement de l'utilisateur
 	guiSun.draw();
 
 	guiEarth.setPosition(ofPoint(0, 275)); //reposition pour eviter le d/placement de l'utilisateur
@@ -66,16 +63,6 @@ void guiVoyageurEspace::draw()
 
 	guiMeteor.setPosition(ofPoint(0, 625));
 	guiMeteor.draw();
-}
-
-/**
-*\fonction getCamLocation()
-*\brief retourne le vecteur correspondant au centre afficher a l'interface
-*\return ofVec3f (float x, float y, float z)
-*/
-ofVec3f guiVoyageurEspace::getCamLocation()
-{
-	return camLoc;
 }
 
 /**
