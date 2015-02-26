@@ -24,8 +24,6 @@ public:
 	ofVec3f getSunCenter();
 	float getSunRotation();
 
-	ofVec3f getCamLocation();
-
 	float getEarthRadius();
 	int getEarthResolution();
 	float getEarthRotation();
@@ -44,8 +42,6 @@ public:
 	float getMeteorSpeed();
 
 private:
-	// camera
-	ofxVec3Slider camLoc;
 	
 	//sun
 	ofxFloatSlider sunRadius;
