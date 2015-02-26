@@ -49,7 +49,7 @@ void ofApp::setup(){
 	fp_cam.setup();
 	pers_cam.setup();
 	//Modele 3D
-	vaisseau = new modele3D("turbosonic.obj", (float)ofGetWidth()*0.75, (float)ofGetHeight()*0.65, 0, 0.5, 0.5, 0.5);
+	vaisseau = new modele3D("turbosonic.obj", (float)ofGetWidth()*0.75, (float)ofGetHeight()*0.65, 0, 0.1, 0.1, 0.1);
 	vaisseau->setup();
 
 	ofRectangle orientedViewport = ofGetNativeViewport();
