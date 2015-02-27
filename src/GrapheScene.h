@@ -7,6 +7,7 @@ private:
 	GrapheSceneNode* _racine;
 
 public:
+	GrapheScene(){};
 	GrapheScene(GrapheSceneNode* racine);
 	~GrapheScene(void);
 	void GrapheScene::render();

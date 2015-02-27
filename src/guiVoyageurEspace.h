@@ -11,8 +11,9 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "IElementDessinable.h"
 
-class guiVoyageurEspace 
+class guiVoyageurEspace : public IElementDessinable
 {
 public:
 	void setup();
@@ -29,6 +30,8 @@ public:
 	float getEarthRotation();
 	float getEarthOrbite();
 	float getEarthOrbiteRadius();
+	ofVec3f getEarthPosition();
+	void setEarthPosition(ofVec3f pos);
 
 	float getMoonRadius();
 	int getMoonResolution();
@@ -56,6 +59,7 @@ private:
 	ofxFloatSlider earthRotation;
 	ofxFloatSlider earthOrbite;
 	ofxFloatSlider earthOrbiteRadius;
+	ofVec3f earthPosition;
 
 	//lune
 	ofxFloatSlider moonRadius;

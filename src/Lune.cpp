@@ -1,8 +1,9 @@
 #include "Lune.h"
 
-void Lune::setup(guiVoyageurEspace gui){
-	model.setRadius(gui.getMoonRadius());
-	model.setResolution(gui.getMoonResolution());
+void Lune::setup(guiVoyageurEspace* gui){
+	_gui = gui;
+	model.setRadius(_gui->getMoonRadius());
+	model.setResolution(_gui->getMoonResolution());
 
 	materiel.setSpecularColor(0);
 
@@ -10,7 +11,7 @@ void Lune::setup(guiVoyageurEspace gui){
 	angleOrbite = 0;
 }
 
-void Lune::draw(guiVoyageurEspace gui, ofVec3f positionTerre){
+void Lune::draw(){
 	if (angleOrbite >= 365){
 		angleOrbite -= 365;
 	}
@@ -21,16 +22,16 @@ void Lune::draw(guiVoyageurEspace gui, ofVec3f positionTerre){
 
 	materiel.begin();
 
-	model.setRadius(gui.getMoonRadius());
+	model.setRadius(_gui->getMoonRadius());
 	
-	model.setResolution(gui.getMoonResolution());
+	model.setResolution(_gui->getMoonResolution());
 
-	model.rotate(gui.getMoonRotation(), 0, 1, 0);
+	model.rotate(_gui->getMoonRotation(), 0, 1, 0);
 
-	ofVec3f p(0, 0, gui.getMoonOrbiteRadius());
-	p += positionTerre;
+	ofVec3f p(0, 0, _gui->getMoonOrbiteRadius());
+	p += _gui->getEarthPosition();
 	model.setPosition(p);
-	model.rotateAround(angleOrbite, ofVec3f(0, 1, 0), positionTerre);
+	model.rotateAround(angleOrbite, ofVec3f(0, 1, 0), _gui->getEarthPosition());
 
 	model.draw();
 
@@ -38,5 +39,5 @@ void Lune::draw(guiVoyageurEspace gui, ofVec3f positionTerre){
 
 	texture.getTextureReference().unbind();
 	ofPopMatrix();
-	angleOrbite += gui.getMoonOrbite();
+	angleOrbite += _gui->getMoonOrbite();
 }

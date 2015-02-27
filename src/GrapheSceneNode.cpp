@@ -13,11 +13,13 @@ GrapheSceneNode::GrapheSceneNode(IElementDessinable* dessinable)
 	_descendants = vector<GrapheSceneNode*>();
 }
 
-GrapheSceneNode::GrapheSceneNode(IElementDessinable* dessinable, bool draw)
+GrapheSceneNode::GrapheSceneNode(IElementDessinable* dessinable, IElementDessinable** descendants, int nb_desc)
 {
-	_draw = draw;
+	_draw = true;
 	_dessinable = dessinable;
 	_descendants = vector<GrapheSceneNode*>();
+	for (int i = 0; i < nb_desc; i++)
+		_descendants.push_back(new GrapheSceneNode(descendants[i]));
 }
 
 GrapheSceneNode::~GrapheSceneNode(void)

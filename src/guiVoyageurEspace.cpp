@@ -167,6 +167,16 @@ float guiVoyageurEspace::getEarthOrbiteRadius()
 	return earthOrbiteRadius;
 }
 
+ofVec3f guiVoyageurEspace::getEarthPosition()
+{
+	return earthPosition;
+}
+
+void guiVoyageurEspace::setEarthPosition(ofVec3f pos)
+{
+	earthPosition = pos;
+}
+
 /**
 *\fonction getSunRadius()
 *\brief retourne le rayon afficher a l'interface
