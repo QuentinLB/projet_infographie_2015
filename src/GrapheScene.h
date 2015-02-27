@@ -5,10 +5,10 @@ class GrapheScene
 {
 private:
 	GrapheSceneNode* _racine;
-
 public:
 	GrapheScene(){};
 	GrapheScene(GrapheSceneNode* racine);
 	~GrapheScene(void);
-	void GrapheScene::render();
+	void render();
+	void dealloc();
 };

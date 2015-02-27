@@ -10,9 +10,10 @@
 #define modele3D_h
 
 #include "ofMain.h"
+#include "IElementDessinable.h"
 #include "ofxAssimpModelLoader.h" // Addon modèle 3D
 
-class modele3D {
+class modele3D : public IElementDessinable{
 
 public:
 	// Constructeur

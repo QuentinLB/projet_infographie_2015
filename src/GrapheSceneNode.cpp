@@ -13,13 +13,11 @@ GrapheSceneNode::GrapheSceneNode(IElementDessinable* dessinable)
 	_descendants = vector<GrapheSceneNode*>();
 }
 
-GrapheSceneNode::GrapheSceneNode(IElementDessinable* dessinable, IElementDessinable** descendants, int nb_desc)
+GrapheSceneNode::GrapheSceneNode(IElementDessinable* dessinable, bool isDrawable)
 {
-	_draw = true;
+	_draw = isDrawable;
 	_dessinable = dessinable;
 	_descendants = vector<GrapheSceneNode*>();
-	for (int i = 0; i < nb_desc; i++)
-		_descendants.push_back(new GrapheSceneNode(descendants[i]));
 }
 
 GrapheSceneNode::~GrapheSceneNode(void)
@@ -39,4 +37,19 @@ vector<GrapheSceneNode*> GrapheSceneNode::getDescendants()
 IElementDessinable* GrapheSceneNode::getDessinable()
 {
 	return _dessinable;
+}
+
+bool GrapheSceneNode::isDrawable()
+{
+	return _draw;
+}
+
+void GrapheSceneNode::setDraw(bool isDrawable)
+{
+	_draw = isDrawable;
+}
+
+void GrapheSceneNode::switchVisibility()
+{
+	_draw = !_draw;
 }

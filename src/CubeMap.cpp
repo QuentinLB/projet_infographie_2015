@@ -69,7 +69,7 @@ void CubeMap::draw()
 	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 
 	glDepthFunc(GL_LEQUAL);
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 	cubeshader.begin();
 	//glDisable(GL_DEPTH_TEST);
 	glActiveTexture(GL_TEXTURE0);
@@ -91,7 +91,7 @@ void CubeMap::draw()
 
 	glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 	glPopMatrix();
 }
 

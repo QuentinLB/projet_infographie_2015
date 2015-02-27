@@ -13,9 +13,12 @@ private:
 public:
 	GrapheSceneNode(void);
 	GrapheSceneNode(IElementDessinable* dessinable);
-	GrapheSceneNode(IElementDessinable* dessinable, IElementDessinable** descendants, int nb_desc);
+	GrapheSceneNode(IElementDessinable* dessinable, bool isDrawable);
 	~GrapheSceneNode(void);
 	void addDescendant(GrapheSceneNode* node);
 	vector<GrapheSceneNode*> getDescendants();
 	IElementDessinable* getDessinable();
+	bool isDrawable();
+	void setDraw(bool isDrawable);
+	void switchVisibility();
 };

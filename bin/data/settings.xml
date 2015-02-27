@@ -1,3 +1,10 @@
-<Camera>
-	<position>370.939, 218.112, 479.592</position>
+<Camera>
+	<position>370.939, 218.112, 479.592</position>
+<Lune>
+		<rayon>5</rayon>
+		<resolution>89</resolution>
+		<Rotation>0.1</Rotation>
+		<vitesse_d'Orbite>0.2</vitesse_d'Orbite>
+		<rayon_d'Orbite>40</rayon_d'Orbite>
+	</Lune>
 </Camera>

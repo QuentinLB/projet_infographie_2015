@@ -55,14 +55,13 @@ void guiVoyageurEspace::draw()
 	guiEarth.setPosition(ofPoint(0, 275)); //reposition pour eviter le d/placement de l'utilisateur
 	guiEarth.draw();
 
-	guiCam.setPosition(ofPoint(0, 400)); //reposition pour eviter le d/placement de l'utilisateur
-	guiCam.draw();
+	//guiCam.setPosition(ofPoint(0, 400)); //reposition pour eviter le d/placement de l'utilisateur
+	//guiCam.draw();
 
-	guiMoon.setPosition(ofPoint(0, 500)); //reposition pour eviter le d/placement de l'utilisateur
+	guiMoon.setPosition(ofPoint(0, 400)); //reposition pour eviter le d/placement de l'utilisateur
 	guiMoon.draw();
-
-	guiMeteor.setPosition(ofPoint(0, 625));
-	guiMeteor.draw();
+	//guiMeteor.setPosition(ofPoint(0, 625));
+	//guiMeteor.draw();
 }
 
 /**
