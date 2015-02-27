@@ -60,15 +60,15 @@ void ofApp::setup(){
 	racine.addDescendant(new GrapheSceneNode(moon));
 	graphe_scene = new GrapheScene(&racine);
 
-	// Command OpenGL qui utilise l'information de profondeur pour l'occlusion
+	// Commande OpenGL qui utilise l'information de profondeur pour l'occlusion
 	// au lieu de dessiner des objets qui sont cachées par d'autres par dessus
 	glEnable(GL_DEPTH_TEST); 
 
 	fp_cam.setup();
 	pers_cam.setup();
 	//Modele 3D
-	//vaisseau = new modele3D("turbosonic.obj", (float)ofGetWidth()*0.75, (float)ofGetHeight()*0.65, 0, 0.5, 0.5, 0.5);
-	//vaisseau->setup();
+	vaisseau = new modele3D("turbosonic.obj", (float)ofGetWidth()*0.75, (float)ofGetHeight()*0.65, 0, 0.1, 0.1, 0.1);
+	vaisseau->setup();
 
 	ofRectangle orientedViewport = ofGetNativeViewport();
 	float eyeX = ofGetWidth() / 2;
