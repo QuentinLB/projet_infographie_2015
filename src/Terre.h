@@ -10,8 +10,14 @@ public:
 private:
 	guiVoyageurEspace* _gui;
 	ofSpherePrimitive model;
-	ofImage texture;
+	ofImage textureMapImage;
+	ofTexture textureMap;
+	ofImage normalMapImage;
+	ofTexture normalMap;
+	ofImage diffuseMapImage;
+	ofTexture diffuseMap;
 	ofMaterial materiel;
 	float angleOrbite;
+	ofShader shaderDeRelief;
 };
 

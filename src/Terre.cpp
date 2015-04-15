@@ -1,13 +1,26 @@
 #include "Terre.h"
 
 void Terre::setup(guiVoyageurEspace* gui){
+	shaderDeRelief.load("relief.vert", "relief.frag");
+
 	_gui = gui;
 	model.setRadius(gui->getEarthRadius());
 	model.setResolution(gui->getEarthResolution());
 
 	materiel.setSpecularColor(0);
 
-	texture.loadImage("texture_earth_clouds.jpg");
+	textureMapImage.loadImage("2_no_clouds_8k.jpg");
+	textureMap.allocate(1944, 972, GL_RGB, false);
+	textureMap.loadData(textureMapImage.getPixels(), 1944, 972, GL_RGB);
+
+	normalMapImage.loadImage("earth_normalmap.jpg");
+	normalMap.allocate(1944, 972, GL_RGB, false);
+	normalMap.loadData(normalMapImage.getPixels(), 1944, 972, GL_RGB);
+
+	diffuseMapImage.loadImage("earth-night.jpg");
+	diffuseMap.allocate(1944, 972, GL_RGB, false);
+	diffuseMap.loadData(diffuseMapImage.getPixels(), 1944, 972, GL_RGB);
+
 	angleOrbite = 0;
 }
 
@@ -15,10 +28,13 @@ void Terre::draw(){
 	if (angleOrbite >= 365){
 		angleOrbite -= 365;
 	}
-	
+
 	ofPushMatrix();
-	texture.getTextureReference().bind();
-	model.mapTexCoordsFromTexture(texture.getTextureReference());
+	shaderDeRelief.begin();
+	shaderDeRelief.setUniformTexture("textureMap", textureMap, 0);
+	shaderDeRelief.setUniformTexture("normalMap", normalMap, 1);
+	shaderDeRelief.setUniformTexture("diffuseMap", diffuseMap, 2);
+	shaderDeRelief.setUniform1f("alpha", 1);
 
 	materiel.begin();
 
@@ -34,10 +50,10 @@ void Terre::draw(){
 	model.rotateAround(angleOrbite, ofVec3f(0, 1, 0), _gui->getSunCenter());
 
 	model.draw();
-
 	materiel.end();
 
-	texture.getTextureReference().unbind();
+	shaderDeRelief.end();
+
 	ofPopMatrix();
 	angleOrbite += _gui->getEarthOrbite();
 
