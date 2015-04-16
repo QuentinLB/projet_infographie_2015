@@ -6,6 +6,8 @@
 #include "modele3D.h"
 #include "firstPersonneCam.h"
 #include "PerspectiveCam.h"
+#include "thirdPersonneCam.h"
+#include "Player.h"
 
 class ofApp : public ofBaseApp{
 	private:
@@ -29,6 +31,7 @@ class ofApp : public ofBaseApp{
 		PerspectiveCam pers_cam;
 
 		bool fp_cam_enabled;
+		bool td_cam_enabled;
 
 	public:
 		void setup();
