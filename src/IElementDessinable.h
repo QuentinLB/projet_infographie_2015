@@ -1,5 +1,5 @@
 #pragma once
-
+#include "ofMain.h"
 using namespace std;
 
 class IElementDessinable
