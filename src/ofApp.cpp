@@ -121,7 +121,8 @@ void ofApp::draw(){
 		pers_cam.end();
 	}
 	ofDisableLighting();
-	ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 15);
+	ofDrawBitmapString("TAB : Camera Perspective	1 : Camera Premiere personne	2 : Camera Troisieme Personne			FPS : ", 10, 15);
+	ofDrawBitmapString(ofToString(ofGetFrameRate()), ofGetWidth() - 75, 15);
 }
 
 void ofApp::exit()
