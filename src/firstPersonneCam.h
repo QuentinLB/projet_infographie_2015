@@ -2,7 +2,7 @@
 *\file firstPersonneCam.h
 *\author Alexandre Chouinard
 *\brief declaration de la class firstPersoneCam qui gere la camera premiere personne
-*\date 17/02/2015
+*\date 15/04/2015
 *\version 1.0
 */
 
@@ -11,31 +11,22 @@
 
 #include "ofMain.h"
 
-const float CAM_MAX_SPEED = 15.0;
-const float CAM_ACCELERATION = 1.5;
-const float CAM_CONTROLE_ZONE = 450;
-const float CAM_DEAD_ZONE = 50;
-
 class firstPersonneCam
 {
+
 public:
-	void setup();
-	void resetCam();
+	void setup(ofNode* player);
+	void setCam();
 	void draw();
 	void begin();
 	void end();
-	void keyPressed(int key);
-	void mouseMoved(int x, int y);
-
-	float getSpeed();
+	
 	ofVec3f getPosition();
 
 private :
 
-	ofCamera cam;
-	ofVec3f camDirection;
-	float camSpeed;
-
+	ofCamera m_camera;
+	ofNode* m_player;
 };
 
 #endif
