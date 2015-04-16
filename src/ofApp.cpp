@@ -10,6 +10,8 @@
 #include "modele3D.h"
 #include "firstPersonneCam.h"
 #include "PerspectiveCam.h"
+#include "thirdPersonneCam.h"
+#include "Player.h"
 
 // CONSTANTES
 const std::string ofApp::XN = "cubemap_left2.png";
@@ -22,6 +24,7 @@ const std::string ofApp::ZP = "cubemap_front5.png";
 //--------------------------------------------------------------
 void ofApp::setup(){
 	fp_cam_enabled = false;
+	td_cam_enabled = false;
 
 	cubemap = new CubeMap();
 	((CubeMap*) cubemap)->setup(XP,YP,ZP,XN,YN,ZN);
@@ -59,7 +62,13 @@ void ofApp::setup(){
 	// au lieu de dessiner des objets qui sont cachées par d'autres par dessus
 	ofEnableDepthTest(); 
 
-	fp_cam.setup();
+	player_fp.setup(ofVec3f(ofGetWidth()*.5, ofGetHeight()*.75, 500.0f), ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 0));
+	fp_cam.setup(player_fp.getPlayerNode());
+
+	player_td.setup(ofVec3f(ofGetWidth()*.5, ofGetHeight()*.75, 600.0f), ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 0));
+	td_cam.setup(player_td.getPlayerNode());
+	vaisseau->setElement(player_td.getPlayerNode());
+	
 	pers_cam.setup();
 }
 
@@ -71,12 +80,22 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofBackground(ofColor::gray);
-	if (fp_cam_enabled){
-		fp_cam.draw();
-		fp_cam.begin();
-	}
+	if (fp_cam_enabled  || td_cam_enabled){
+		ofHideCursor();
+		if (fp_cam_enabled){
+			player_fp.draw();
+			fp_cam.draw();
+			fp_cam.begin();
+		}
+		else if (td_cam_enabled){
+			player_td.draw();
+			td_cam.draw();
+			td_cam.begin();
+			vaisseau->setElement(player_td.getPlayerNode());
+		}
 	else{
 		gui->draw();
+		ofShowCursor();
 		pers_cam.draw();
 		pers_cam.begin();
 	}
@@ -90,6 +109,9 @@ void ofApp::draw(){
 
 	if (fp_cam_enabled){
 		fp_cam.end();
+	}
+	else if (td_cam_enabled){
+		td_cam.end();
 	}
 	else{
 		pers_cam.end();
@@ -105,12 +127,25 @@ void ofApp::exit()
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	if (key == OF_KEY_TAB){
-		fp_cam_enabled = !fp_cam_enabled;
+	if (key == '1'){
+		td_cam_enabled = false;
+		fp_cam_enabled = true;
 		//gui_node->switchVisibility();
 	}
-	else if (fp_cam_enabled){
-		fp_cam.keyPressed(key);
+	if (key == '2'){
+		fp_cam_enabled = false;
+		td_cam_enabled= true;
+	}
+	if (key == OF_KEY_TAB)
+	{
+		fp_cam_enabled = false;
+		td_cam_enabled = false;
+	}
+	if (fp_cam_enabled){ 
+		player_fp.keyPressed(key);
+	}
+	if (td_cam_enabled){
+		player_td.keyPressed(key);
 	}
 	
 	/*ofVec3f pos = cam.getPosition();
@@ -137,7 +172,10 @@ void ofApp::keyReleased(int key){
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
 	if (fp_cam_enabled){
-		fp_cam.mouseMoved(x, y);
+		player_fp.mouseMoved(x, y);
+	}
+	if (td_cam_enabled){
+		player_td.mouseMoved(x, y);
 	}
 }
 
