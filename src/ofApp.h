@@ -29,6 +29,9 @@ class ofApp : public ofBaseApp{
 		ofCamera cam;
 		firstPersonneCam fp_cam;
 		PerspectiveCam pers_cam;
+		thirdPersonneCam td_cam;
+		Player player_fp;
+		Player player_td;
 
 		bool fp_cam_enabled;
 		bool td_cam_enabled;
