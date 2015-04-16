@@ -12,6 +12,10 @@
 void firstPersonneCam::setup()
 {
 	resetCam();
+<<<<<<< HEAD
+=======
+	cam.setFarClip(10000);
+>>>>>>> Infographie/master
 }
 
 //reset the cam
@@ -26,12 +30,23 @@ void firstPersonneCam::resetCam()
 //move the cam ( must be put in draw)
 void firstPersonneCam::draw()
 {
+<<<<<<< HEAD
+=======
+	ofPushMatrix();
+	
+>>>>>>> Infographie/master
 	cam.rotate(0.5, camDirection.y, 0.0, 0.0); //axe des x
 	cam.rotate(0.5, 0.0, camDirection.x, 0.0);//axe des y
 	cam.roll(4 * camDirection.z); //axe des z
 	cam.dolly(-1 * camSpeed);
 
 	camDirection.z = 0.0;//reset z direction to stop de roll
+<<<<<<< HEAD
+=======
+	
+		
+	ofPopMatrix();
+>>>>>>> Infographie/master
 }
 
 //for projectio nmatrix put in gening of draw
@@ -75,6 +90,10 @@ void firstPersonneCam::keyPressed(int key)
 	case OF_KEY_DOWN: if (camSpeed > -1 * CAM_MAX_SPEED) {
 						  camSpeed -= CAM_ACCELERATION / ofGetFrameRate();
 	}
+<<<<<<< HEAD
+=======
+					  break;
+>>>>>>> Infographie/master
 	}
 }
 

@@ -1,50 +1,66 @@
+﻿#include <string>
 #include "ofApp.h"
+#include "guiVoyageurEspace.h"
+#include "GrapheScene.h"
+#include "GrapheSceneNode.h"
+#include "Soleil.h"
+#include "Terre.h"
+#include "Lune.h"
+#include "CubeMap.h"
+#include "modele3D.h"
+#include "firstPersonneCam.h"
+#include "PerspectiveCam.h"
 
-ofSpherePrimitive planettes[3];
-ofImage textures[3];
-ofLight pointLight;
-ofCamera cam;
-ofMaterial material[3];
-
-const int SOLEIL = 0;
-const int PLANETTE = 1;
-const int LUNE = 2;
-
-const string pathSrc = "C:\\openframeworks_X64-VS2013_X64\\apps\\myApps\\ProjetInfographie\\src\\";
+// CONSTANTES
+const std::string ofApp::XN = "cubemap_left2.png";
+const std::string ofApp::XP = "cubemap_right1.png";
+const std::string ofApp::YN = "cubemap_bottom4.png";
+const std::string ofApp::YP = "cubemap_top3.png";
+const std::string ofApp::ZN = "cubemap_back6.png";
+const std::string ofApp::ZP = "cubemap_front5.png";
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	ofBackground(ofColor::black);
+	fp_cam_enabled = false;
 
-	ofRectangle orientedViewport = ofGetNativeViewport();
-	float eyeX = orientedViewport.width / 2;
-	float eyeY = orientedViewport.height / 2;
+	cubemap = new CubeMap();
+	((CubeMap*) cubemap)->setup(XP,YP,ZP,XN,YN,ZN);
 
-	cam.setPosition(ofGetWidth()*.2, ofGetHeight()*.75, 300);
-	cam.lookAt(ofVec3f(eyeX, eyeY, 0), ofVec3f(0, 1, 0));
+	gui = new guiVoyageurEspace();
+	((guiVoyageurEspace*) gui)->setup();
 
-	planettes[SOLEIL].setRadius(100);
-	planettes[SOLEIL].setPosition(ofGetWidth() / 2, ofGetHeight() / 2, 0);
+	sun = new Soleil();
+	((Soleil*)sun)->setup((guiVoyageurEspace*) gui);
 
-	material[SOLEIL].setEmissiveColor(ofFloatColor::white);
+	earth = new Terre();
+	((Terre*)earth)->setup((guiVoyageurEspace*) gui);
 
-	pointLight.setPosition(ofGetWidth() / 2, ofGetHeight() / 2, 0);
+	moon = new Lune();
+	((Lune*)moon)->setup((guiVoyageurEspace*) gui);
 
-	textures[SOLEIL].loadImage(pathSrc + "texture_sun.jpg");
+	//Modele 3D
+	vaisseau = new modele3D("turbosonic.obj", (float)ofGetWidth()*0.75, (float)ofGetHeight()*0.65, 0, 0.1, 0.1, 0.1);
+	((modele3D*)vaisseau)->setup();
 
-	planettes[PLANETTE].setRadius(20);
-	planettes[PLANETTE].setPosition(ofGetWidth() / 4, ofGetHeight() / 2, 0);
 
-	material[PLANETTE].setSpecularColor(0);
+	//construction du graphe de scene
+	GrapheSceneNode* racine = new GrapheSceneNode(cubemap);
 
-	textures[PLANETTE].loadImage(pathSrc + "texture_earth_clouds.jpg");
+	GrapheSceneNode* sun_node = new GrapheSceneNode(sun);
+	sun_node->addDescendant(new GrapheSceneNode(earth));
+	sun_node->addDescendant(new GrapheSceneNode(moon));
 
-	planettes[LUNE].setRadius(4);
-	planettes[LUNE].setPosition(ofGetWidth() / 4 - 15, ofGetHeight() / 2, 0);
+	racine->addDescendant(sun_node);
+	racine->addDescendant(new GrapheSceneNode(vaisseau));
 
-	material[LUNE].setSpecularColor(0);
+	graphe_scene = new GrapheScene(racine);
 
-	textures[LUNE].loadImage(pathSrc + "texture_moon.jpg");
+	// Commande OpenGL qui utilise l'information de profondeur pour l'occlusion
+	// au lieu de dessiner des objets qui sont cachées par d'autres par dessus
+	ofEnableDepthTest(); 
+
+	fp_cam.setup();
+	pers_cam.setup();
 }
 
 //--------------------------------------------------------------
@@ -54,41 +70,63 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	ofBackground(ofColor::gray);
+	if (fp_cam_enabled){
+		fp_cam.draw();
+		fp_cam.begin();
+	}
+	else{
+		gui->draw();
+		pers_cam.draw();
+		pers_cam.begin();
+	}
+
 	ofEnableLighting();
-	pointLight.enable();
+	light.enable();
+	light.setPosition(((guiVoyageurEspace*) gui)->getSunCenter());
+	light.setDiffuseColor(((guiVoyageurEspace*) gui)->getSunColor());
 
-	cam.begin();
+	graphe_scene->render();
 
-	for (int astre = SOLEIL; astre <= LUNE; astre++)
-	{
-		ofPushMatrix();
-		textures[astre].getTextureReference().bind();
-		planettes[astre].mapTexCoordsFromTexture(textures[astre].getTextureReference());
-
-		material[astre].begin();
-
-		if (astre == SOLEIL)
-		{
-			planettes[astre].rotate(0.03, 0.0, 0.1, 0);
-		}
-		else
-		{
-			planettes[astre].rotate(0.1, 0.0, 0.1, 0); // rotate on itself
-		}
-		planettes[astre].draw();
-
-		material[astre].end();
-
-		textures[astre].getTextureReference().unbind();
-		ofPopMatrix();
+	if (fp_cam_enabled){
+		fp_cam.end();
+	}
+	else{
+		pers_cam.end();
 	}
 	ofDisableLighting();
-	cam.end();
+	ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 15);
+}
+
+void ofApp::exit()
+{
+	delete graphe_scene;
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	if (key == OF_KEY_TAB){
+		fp_cam_enabled = !fp_cam_enabled;
+		//gui_node->switchVisibility();
+	}
+	else if (fp_cam_enabled){
+		fp_cam.keyPressed(key);
+	}
+	
+	/*ofVec3f pos = cam.getPosition();
+	if(key == 'z' || key == 'w' || key == OF_KEY_UP)
+		pos.z = pos.z - CAMERA_VIT;
+	else if(key == 's' || key == OF_KEY_DOWN)
+		pos.z = pos.z + CAMERA_VIT;
+	else if(key == 'q' || key =='a' || key == OF_KEY_LEFT)
+		pos.x = pos.x - CAMERA_VIT;
+	else if(key == 'd' || key == OF_KEY_RIGHT)
+		pos.x = pos.x + CAMERA_VIT;
+	else if(key == ' ')
+		pos.y = pos.y + CAMERA_VIT;
+	else if(key == OF_KEY_CONTROL)
+		pos.y = pos.y - CAMERA_VIT;
+	cam.setPosition(pos);*/
 }
 
 //--------------------------------------------------------------
@@ -98,7 +136,9 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+	if (fp_cam_enabled){
+		fp_cam.mouseMoved(x, y);
+	}
 }
 
 //--------------------------------------------------------------
