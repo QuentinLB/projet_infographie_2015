@@ -23,6 +23,7 @@ public:
 	void setup();
 	void update();
 	void draw();
+	void setElement(ofNode* aNode);
 	
 private:
 	//Propriétés
@@ -33,6 +34,11 @@ private:
 	float mod3DscaleX;
 	float mod3DscaleY;
 	float mod3DscaleZ;
+	float mod3DrotationX;
+	float mod3DrotationY;
+	float mod3DrotationZ;
 	ofxAssimpModelLoader model;
+
+	void setModel();
 };
 #endif
