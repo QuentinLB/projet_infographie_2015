@@ -80,19 +80,23 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofBackground(ofColor::gray);
-	if (fp_cam_enabled  || td_cam_enabled){
+	if (fp_cam_enabled  || td_cam_enabled)
+	{
 		ofHideCursor();
-		if (fp_cam_enabled){
+		if (fp_cam_enabled)
+		{
 			player_fp.draw();
 			fp_cam.draw();
 			fp_cam.begin();
 		}
-		else if (td_cam_enabled){
+		else if (td_cam_enabled)
+		{
 			player_td.draw();
 			td_cam.draw();
 			td_cam.begin();
 			vaisseau->setElement(player_td.getPlayerNode());
 		}
+	}
 	else{
 		gui->draw();
 		ofShowCursor();
