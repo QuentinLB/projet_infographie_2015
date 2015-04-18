@@ -68,6 +68,8 @@ void ofApp::setup(){
 	player_td.setup(ofVec3f(ofGetWidth()*.5, ofGetHeight()*.75, 600.0f), ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5, 0));
 	td_cam.setup(player_td.getPlayerNode());
 	vaisseau->setElement(player_td.getPlayerNode());
+
+	projector.setSpotlight(20.0F);
 	
 	pers_cam.setup();
 }
@@ -82,6 +84,7 @@ void ofApp::draw(){
 	ofBackground(ofColor::gray);
 	if (fp_cam_enabled  || td_cam_enabled)
 	{
+		ofEnableLighting();
 		ofHideCursor();
 		if (fp_cam_enabled)
 		{
@@ -95,6 +98,9 @@ void ofApp::draw(){
 			td_cam.draw();
 			td_cam.begin();
 			vaisseau->setElement(player_td.getPlayerNode());
+			projector.enable();
+			projector.setPosition(player_td.getPosition());
+			projector.setOrientation(player_td.getOrientation());
 		}
 	}
 	else{
@@ -104,7 +110,6 @@ void ofApp::draw(){
 		pers_cam.begin();
 	}
 
-	ofEnableLighting();
 	light.enable();
 	light.setPosition(((guiVoyageurEspace*) gui)->getSunCenter());
 	light.setDiffuseColor(((guiVoyageurEspace*) gui)->getSunColor());

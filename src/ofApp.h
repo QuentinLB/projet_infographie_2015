@@ -26,6 +26,7 @@ class ofApp : public ofBaseApp{
 		IElementDessinable* cubemap;
 		IElementDessinable* vaisseau;
 		ofLight light;
+		ofLight projector;
 		ofCamera cam;
 		firstPersonneCam fp_cam;
 		PerspectiveCam pers_cam;

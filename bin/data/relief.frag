@@ -46,6 +46,6 @@ void main() {
     vec4 diff = vec4(texture2D(diffuseMap, vec2(x, y)).rgb, 1.0);
                 
     // additive blending
-    gl_FragColor = mix(  vec4((gl_Color).rgb, alpha), vec4((bump + diff).rgb, alpha), 0.8);          
+    gl_FragColor = mix(  vec4((gl_Color).rgb, alpha), vec4((bump + diff).rgb, alpha), 1.0);          
             
 }
