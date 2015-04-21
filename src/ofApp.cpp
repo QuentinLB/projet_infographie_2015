@@ -21,6 +21,10 @@ const std::string ofApp::YP = "cubemap_top3.png";
 const std::string ofApp::ZN = "cubemap_back6.png";
 const std::string ofApp::ZP = "cubemap_front5.png";
 
+int xMeteoreDestination;
+int yMeteoreDestination;
+int boutonSouris;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 	fp_cam_enabled = false;
@@ -72,11 +76,13 @@ void ofApp::setup(){
 	projector.setSpotlight(20.0F);
 	
 	pers_cam.setup();
+
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+	//Déplacement du météor selon la position de pointage de la souris
+	meteore.moveTo(xMeteoreDestination, yMeteoreDestination);
 }
 
 //--------------------------------------------------------------
@@ -125,6 +131,17 @@ void ofApp::draw(){
 	else{
 		pers_cam.end();
 	}
+	
+	//Dessiner le météore (soit une sphère ou un cone)
+	if (boutonSouris == 0)
+	{
+		meteore.drawIcosphere();
+	}
+	if (boutonSouris == 2)
+	{
+		meteore.drawCone();
+	}
+
 	ofDisableLighting();
 	ofDrawBitmapString("TAB : Camera Perspective	1 : Camera Premiere personne	2 : Camera Troisieme Personne			FPS : ", 10, 15);
 	ofDrawBitmapString(ofToString(ofGetFrameRate()), ofGetWidth() - 75, 15);
@@ -196,7 +213,9 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+	xMeteoreDestination = x;
+	yMeteoreDestination = y;
+	boutonSouris = button;
 }
 
 //--------------------------------------------------------------
