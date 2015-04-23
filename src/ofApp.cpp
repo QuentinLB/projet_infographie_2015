@@ -12,6 +12,7 @@
 #include "PerspectiveCam.h"
 #include "thirdPersonneCam.h"
 #include "Player.h"
+#include "ReactorParticle.h"
 
 // CONSTANTES
 const std::string ofApp::XN = "cubemap_left2.png";
@@ -29,6 +30,7 @@ int boutonSouris;
 void ofApp::setup(){
 	fp_cam_enabled = false;
 	td_cam_enabled = false;
+	reactorEnable = true;
 
 	cubemap = new CubeMap();
 	((CubeMap*) cubemap)->setup(XP,YP,ZP,XN,YN,ZN);
@@ -62,6 +64,8 @@ void ofApp::setup(){
 
 	graphe_scene = new GrapheScene(racine);
 
+	reactor.setup();
+
 	// Commande OpenGL qui utilise l'information de profondeur pour l'occlusion
 	// au lieu de dessiner des objets qui sont cachées par d'autres par dessus
 	ofEnableDepthTest(); 
@@ -83,11 +87,13 @@ void ofApp::setup(){
 void ofApp::update(){
 	//Déplacement du météor selon la position de pointage de la souris
 	meteore.moveTo(xMeteoreDestination, yMeteoreDestination);
+	reactor.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofBackground(ofColor::gray);
+
 	if (fp_cam_enabled  || td_cam_enabled)
 	{
 		ofEnableLighting();
@@ -131,6 +137,13 @@ void ofApp::draw(){
 	else{
 		pers_cam.end();
 	}
+
+	if (td_cam_enabled && reactorEnable)
+	{
+		ofPushMatrix();
+		reactor.draw(ofPoint(ofGetWindowWidth()/2 - 25, ofGetWindowHeight()/2 + 15));
+		ofPopMatrix();
+	}
 	
 	//Dessiner le météore (soit une sphère ou un cone)
 	if (boutonSouris == 0)
@@ -142,9 +155,18 @@ void ofApp::draw(){
 		meteore.drawCone();
 	}
 
+
 	ofDisableLighting();
-	ofDrawBitmapString("TAB : Camera Perspective	1 : Camera Premiere personne	2 : Camera Troisieme Personne			FPS : ", 10, 15);
-	ofDrawBitmapString(ofToString(ofGetFrameRate()), ofGetWidth() - 75, 15);
+	ofDrawBitmapString("TAB : Camera Perspective	1 : Camera Premiere personne	2 : Camera Troisieme Personne", 10, 15);
+	ofDrawBitmapString("FPS : " + ofToString(ofGetFrameRate()), ofGetWidth() - 110, 15);
+	if (fp_cam_enabled || td_cam_enabled)
+	{
+		ofDrawBitmapString("Controle :		Direction : Mouse x et Mouse y		Acceleration : Up Arrow et Down Arrow", 10, 30);
+		if (td_cam_enabled)
+		{
+			ofDrawBitmapString("Controle :		Activer/Couper le reacteur : 0", 10, 45);
+		}
+	}
 }
 
 void ofApp::exit()
@@ -168,12 +190,17 @@ void ofApp::keyPressed(int key){
 		fp_cam_enabled = false;
 		td_cam_enabled = false;
 	}
+	if (key == '0')
+	{
+		reactorEnable = !reactorEnable;
+	}
 	if (fp_cam_enabled){ 
 		player_fp.keyPressed(key);
 	}
 	if (td_cam_enabled){
 		player_td.keyPressed(key);
 	}
+
 	
 	/*ofVec3f pos = cam.getPosition();
 	if(key == 'z' || key == 'w' || key == OF_KEY_UP)

@@ -8,6 +8,8 @@
 #include "PerspectiveCam.h"
 #include "thirdPersonneCam.h"
 #include "Player.h"
+#include "primitiveInMotion.h"
+#include "ReactorParticle.h"
 
 class ofApp : public ofBaseApp{
 	private:
@@ -34,8 +36,14 @@ class ofApp : public ofBaseApp{
 		Player player_fp;
 		Player player_td;
 
+		Primitive meteore;
+
+		ReactorParticle reactor;
+
+
 		bool fp_cam_enabled;
 		bool td_cam_enabled;
+		bool reactorEnable;
 
 	public:
 		void setup();
