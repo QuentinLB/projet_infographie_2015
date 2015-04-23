@@ -1,3 +1,11 @@
+/**
+*\file Player.h
+*\author Alexandre Chouinard
+*\brief declaration de la class Player qui gere les mouvements du joueur
+*\date 23/04/2015
+*\version 1.0
+*/
+
 #pragma once
 
 #include "ofMain.h"

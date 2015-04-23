@@ -1,18 +1,20 @@
 /**
 *\file Player.cpp
 *\author Alexandre Chouinard
-*\brief definition de la class PLayer qui gere les mouvement du joueur
+*\brief definition de la class Player qui gere les mouvement du joueur
 *\date 15/04/2015
 *\version 1.0
 */
 
 #include "Player.h"
 
+//setup du joueur
 void Player::setup(ofVec3f playerPosition, ofVec3f playerLookAt)
 {
 	resetPlayer(playerPosition, playerLookAt);
 }
 
+//reset le joueur
 void Player::resetPlayer(ofVec3f playerPosition, ofVec3f playerLookAt)
 {
 	m_speed = 0;
@@ -22,6 +24,8 @@ void Player::resetPlayer(ofVec3f playerPosition, ofVec3f playerLookAt)
 	m_player.setPosition(playerPosition);
 	m_player.lookAt(playerLookAt, ofVec3f(0, 1, 0));
 }
+
+//dessine le joueur
 void Player::draw()
 {
 	ofPushMatrix();
@@ -36,6 +40,8 @@ void Player::draw()
 	m_roll = 0;
 }
 
+
+//gere les entrers
 void Player::keyPressed(int key)
 {
 	switch (key)

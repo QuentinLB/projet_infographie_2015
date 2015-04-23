@@ -57,6 +57,7 @@ void thirdPersonneCam::end()
 
 void thirdPersonneCam::mouseDragged(int x, int y, int button)
 {
+	//contole non efficace doit etre mis dans mouseMouve mais prendre en consideeration le bouton 2 de la sourie
 	/*if (button == 2) //right mouse presse
 	{
 		float midleWinX = ofGetWindowWidth() / 2;
