@@ -86,7 +86,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	//Déplacement du météor selon la position de pointage de la souris
+	//Déplacement du météore selon la position de pointage de la souris
 	meteore.moveTo(xMeteoreDestination, yMeteoreDestination);
 	reactor.update();
 }
@@ -146,7 +146,7 @@ void ofApp::draw(){
 		ofPopMatrix();
 	}
 	
-	//Dessiner le météore (soit une sphère ou un cone)
+	//Dessiner le météore (soit une sphère ou un cône)
 	if (boutonSouris == 0)
 	{
 		meteore.drawIcosphere();

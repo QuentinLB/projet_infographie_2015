@@ -1,93 +1,167 @@
-# Blender MTL File: 'turbosonic.blend'
-# Material Count: 10
-
-newmtl black
-Ns 0.000000
-Ka 0.000000 0.000000 0.000000
-Kd 0.000000 0.000000 0.000000
-Ks 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
+# 
+# Wavefront material file
+# Converted by the DEEP Exploration  Deep Exploration 6.0 x64 6.0.2.6083 Release
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
 
 newmtl blue
-Ns 0.000000
-Ka 0.000000 0.000000 0.000000
-Kd 0.000000 0.000000 0.640000
+Ka 0 0 0.8
+Kd 0 0 0.8
 Ks 0.498039 0.498039 0.498039
-Ni 1.000000
-d 1.000000
 illum 2
-
-newmtl body
-Ns 0.000000
-Ka 0.000000 0.000000 0.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.498039 0.498039 0.498039
-Ni 1.000000
-d 1.000000
-illum 2
-map_Kd Body.png
-
-newmtl chrome
-Ns 0.000000
-Ka 0.000000 0.000000 0.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.498039 0.498039 0.498039
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl glass
-Ns 21.568627
-Ka 0.000000 0.000000 0.000000
-Kd 0.254118 0.310588 0.254118
-Ks 1.000000 1.000000 1.000000
-Ni 1.000000
-d 0.380000
-illum 2
-
-newmtl gum
-Ns 0.000000
-Ka 0.000000 0.000000 0.000000
-Kd 0.050196 0.050196 0.050196
-Ks 0.498039 0.498039 0.498039
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl interior
-Ns 0.000000
-Ka 0.000000 0.000000 0.000000
-Kd 0.166274 0.166274 0.166274
-Ks 0.498039 0.498039 0.498039
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl red
-Ns 0.000000
-Ka 0.000000 0.000000 0.000000
-Kd 0.640000 0.000000 0.000000
-Ks 0.498039 0.498039 0.498039
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl silver
-Ns 0.000000
-Ka 0.000000 0.000000 0.000000
-Kd 0.250981 0.320000 0.320000
-Ks 0.498039 0.498039 0.498039
-Ni 1.000000
-d 1.000000
-illum 2
+Ns 2.46229
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
 
 newmtl white
-Ns 0.000000
-Ka 0.000000 0.000000 0.000000
-Kd 0.555294 0.555294 0.555294
+Ka 0.694118 0.694118 0.694118
+Kd 0.694118 0.694118 0.694118
 Ks 0.498039 0.498039 0.498039
-Ni 1.000000
-d 1.000000
 illum 2
+Ns 2.46229
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl red
+Ka 0.8 0 0
+Kd 0.8 0 0
+Ks 0.498039 0.498039 0.498039
+illum 2
+Ns 2.46229
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl interior
+Ka 0.207843 0.207843 0.207843
+Kd 0.207843 0.207843 0.207843
+Ks 0.498039 0.498039 0.498039
+illum 2
+Ns 2.46229
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl body
+Ka 0.8 0.8 0.8
+Kd 1 1 1
+Ks 0.498039 0.498039 0.498039
+illum 2
+Ns 2.46229
+map_Kd Body.png
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl black
+Ka 0 0 0
+Kd 0 0 0
+Ks 0 0 0
+illum 2
+Ns 2.46229
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl chrome
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.498039 0.498039 0.498039
+illum 2
+Ns 2.46229
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl glass
+Ka 0.317647 0.388235 0.317647
+Kd 0.317647 0.388235 0.317647
+Ks 0.498039 0.498039 0.498039
+illum 2
+Ns 2.46229
+d 0.38
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl gum
+Ka 0.0627451 0.0627451 0.0627451
+Kd 0.0627451 0.0627451 0.0627451
+Ks 0.498039 0.498039 0.498039
+illum 2
+Ns 2.46229
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl silver
+Ka 0.313726 0.4 0.4
+Kd 0.313726 0.4 0.4
+Ks 0.498039 0.498039 0.498039
+illum 2
+Ns 2.46229
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
