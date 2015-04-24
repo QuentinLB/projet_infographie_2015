@@ -157,7 +157,7 @@ void ofApp::draw(){
 
 
 	ofDisableLighting();
-	ofDrawBitmapString("TAB : Camera Perspective	1 : Camera Premiere personne	2 : Camera Troisieme Personne", 10, 15);
+	ofDrawBitmapString("F1 : Plein ecran	TAB : Camera Perspective	1 : Camera Premiere personne	2 : Camera Troisieme Personne", 10, 15);
 	ofDrawBitmapString("FPS : " + ofToString(ofGetFrameRate()), ofGetWidth() - 110, 15);
 	if (fp_cam_enabled || td_cam_enabled)
 	{
@@ -176,6 +176,9 @@ void ofApp::exit()
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+	if (key == OF_KEY_F1){
+		ofToggleFullscreen();
+	}
 	if (key == '1'){
 		td_cam_enabled = false;
 		fp_cam_enabled = true;
