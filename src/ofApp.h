@@ -30,6 +30,7 @@ class ofApp : public ofBaseApp{
 		ofLight light;
 		ofLight projector;
 		ofCamera cam;
+		ofImage myImage;
 		firstPersonneCam fp_cam;
 		PerspectiveCam pers_cam;
 		thirdPersonneCam td_cam;

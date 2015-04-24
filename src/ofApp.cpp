@@ -25,6 +25,7 @@ const std::string ofApp::ZP = "cubemap_front5.png";
 int xMeteoreDestination;
 int yMeteoreDestination;
 int boutonSouris;
+int snapCounter;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -157,7 +158,7 @@ void ofApp::draw(){
 
 
 	ofDisableLighting();
-	ofDrawBitmapString("F1 : Plein ecran	TAB : Camera Perspective	1 : Camera Premiere personne	2 : Camera Troisieme Personne", 10, 15);
+ofDrawBitmapString("F1 : Plein ecran  TAB : Camera Perspective  1 : Camera 1iere Personne  2 : Camera 3ieme Personne  i: Capture", 10, 15);
 	ofDrawBitmapString("FPS : " + ofToString(ofGetFrameRate()), ofGetWidth() - 110, 15);
 	if (fp_cam_enabled || td_cam_enabled)
 	{
@@ -196,6 +197,12 @@ void ofApp::keyPressed(int key){
 	if (key == '0')
 	{
 		reactorEnable = !reactorEnable;
+	}
+	// Sauvegarde une capture d'écran dans le répertoire bin/data du projet à chaque fois que la touche "i" est pressée.
+	if (key == 'i'){
+		myImage.grabScreen(0,0,ofGetWindowWidth(),ofGetHeight());
+		myImage.saveImage("Spaceshot-"+ofToString(snapCounter)+".png");
+		snapCounter++;
 	}
 	if (fp_cam_enabled){ 
 		player_fp.keyPressed(key);
